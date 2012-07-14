@@ -6,4 +6,8 @@ http://gothamjs.com
 
 You'll need Chrome 21 or newer in order to view the seamless examples.
 
-MIT License, bla bla ...
+## License
+
+http://creativecommons.org/licenses/by/2.0/
+
+(Basically, just say you got it here and we're cool.)
