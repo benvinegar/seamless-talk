@@ -1,0 +1,162 @@
+@font-face {
+  font-family: 'Londrina Solid';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Londrina Solid'), local('LondrinaSolid-Regular'), url(../assets/fonts/LondrinaSolid-Regular.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Lato Bold'), local('Lato-Bold'), url(../assets/fonts/Lato-Bold.woff) format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Lato Italic'), local('Lato-Italic'), url(../assets/fonts/Lato-Italic.woff) format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(../assets/fonts/Lato-BoldItalic.woff) format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lato Regular'), local('Lato-Regular'), url(../assets/fonts/Lato-Regular.woff) format('woff');
+}
+
+body {
+    background: #2c2e30;
+    font-family: Lato, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+body.scrollable {
+    overflow: scroll;
+}
+
+.reveal h1, 
+.reveal h2, 
+.reveal h3, 
+.reveal h4 {
+    font-family: 'Londrina Solid', Gotham, sans-serif;
+    margin-bottom: 0.5em;
+}
+
+.reveal li {
+    margin-bottom: 1em;
+}
+
+.reveal h2.disqus {
+    font-family: "Gotham", 'Londrina Solid', cursive;
+}
+
+.reveal section img {
+    border: none;
+}
+
+.reveal section.fullscreen iframe {
+    margin: 0;
+}
+.reveal section.fullscreen img {
+    margin: 0;
+    background: none;
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+    .reveal a:hover img {
+        background: rgba(255,255,255,0.2);
+        border-color: #13DAEC;
+        
+        -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
+           -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
+    }
+
+.reveal pre {
+    font-size: 26px;
+    margin-top: 2em;
+    width: auto;
+}
+
+.reveal li pre {
+    margin-top: 1em;
+}
+
+.reveal code {
+    font-family: Consolas, Menlo, monospace;
+}
+
+.reveal pre.long {
+    font-size: 18px;
+}
+
+.reveal ul, .reveal ul ul {
+    list-style-type: none;
+}
+
+.reveal ul ul {
+    margin-top: 1em;
+}
+
+.reveal li {
+    position: relative;
+}
+.reveal li:before {
+    position: absolute;
+    left: -0.5em;
+    content: ".";
+    font-family: 'Londrina Solid', cursive;
+    top: -0.3em;
+    font-size: 72px;
+    text-shadow: 0 1px 0 #ccc,
+                 0 2px 0 #c9c9c9,
+                 0 3px 0 #bbb,
+                 0 4px 0 #b9b9b9,
+                 0 5px 0 #aaa,
+                 0 6px 1px rgba(0,0,0,.1),
+                 0 0 5px rgba(0,0,0,.1),
+                 0 1px 3px rgba(0,0,0,.3),
+                 0 3px 5px rgba(0,0,0,.2),
+                 0 5px 10px rgba(0,0,0,.25),
+                 0 20px 20px rgba(0,0,0,.15);
+}
+
+.reveal iframe {
+    width: 700px;
+    height: 100%;
+}
+
+.reveal iframe[seamless] {
+    height:100%;
+    width:100%;
+    background: transparent;
+}
+
+.reveal iframe h2 {
+    margin: 0 0 20px 0;
+    
+    color: #eee;
+    
+    font-family: 'League Gothic', sans-serif;
+    line-height: 0.9em;
+    letter-spacing: 0.02em;
+    
+    text-transform: uppercase;
+    text-shadow: 0px 0px 6px rgba(0,0,0,0.2);
+}
+
+/* Target seamless iframe */
+.iframe ul { 
+    margin-left: 2em;
+}
+.iframe li:before {
+    top: -40px;
+}

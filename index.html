@@ -1,0 +1,524 @@
+<!doctype html>  
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+        
+        <title>Seamless iframes: The future, today!</title>
+
+        <meta name="description" content="An easy to use CSS 3D slideshow tool for quickly creating good looking HTML presentations.">
+        <meta name="author" content="Hakim El Hattab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+                
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/local.css">
+        <link rel="stylesheet" href="css/print.css" type="text/css" media="print">
+
+        <link rel="stylesheet" href="lib/tomorrow-night.css">
+    </head>
+    
+    <body>
+        
+        <div class="reveal">
+
+            <!-- Used to fade in a background when a specific slide state is reached -->
+            <div class="state-background"></div>
+            
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Seamless iframes</h1>
+                    <h3 class="inverted">The future, today!</h3>
+                    <script>
+                        // Delicously hacky. Look away.
+                        if( navigator.userAgent.match( /(iPhone|iPad|iPod|Android)/i ) ) document.write( '<p style="color: rgba(0,0,0,0.3); text-shadow: none;">('+'Tap to navigate'+')</p>' );
+                    </script>
+                </section>
+
+                <section>
+                    <h2>Who invited this guy</h2>
+                    <ul>
+                        <li>Ben Vinegar
+                        <li>Totally legit lastname
+                        <li>Front-end Engineer at Disqus
+                        <li>Co-author, Third-party JavaScript
+                        <li>@bentlegen
+                </section>
+
+                <section>
+                    <h2 class="disqus">DISQUS</h2>
+                    <ul>
+                        <li>Distributed commenting platform
+                        <li>Third-party JavaScript application
+                        <li>Bloomberg, IGN, Time.com, MLB ... <a href="http://disqus.com/showcase">more</a>
+                        <li>500 trillion pageviews per day
+                </section>
+
+                <section class="fullscreen">
+                    <img src="assets/droid-life.png"/>
+                </section>
+
+                <section>
+                    <h2>Re-written for 2012</h2>
+                    <ul>
+                        <li>Backbone.js + Ender
+                        <li>LESS
+                        <li>Uses the <a href="http://disqus.com/api/docs/">Disqus public API</a> (mostly)
+                        <li>New: realtime streaming
+                        <li class="fragment"><strong>Completely iframed</strong>
+                </section>
+
+                <section class="fullscreen">
+                    <img src="assets/droid-life-iframe.png"/>
+                </section>
+
+                <section>
+                    <h2>I know what you&apos;re thinking</h2>
+                    <ul>
+                        <li class="fragment">Dear god, not another 3D slide deck
+                        <li class="fragment"><strong>Iframes, <em>srsly?</em></strong>
+                </section>
+
+                <section>
+                    <h2>Iframes are great</h2>
+                    <ul>
+                        <li class="fragment">They&apos;re sandboxes
+                        <li class="fragment">Avoid JavaScript conflicts
+                            <pre><code class="javascript">Array.prototype.push = '(╯°□°）╯︵ ┻━┻';</code></pre>
+                        <li class="fragment">More secure
+                        <li class="fragment">Better privacy for users
+                </section>
+
+                <section>
+                    <h2>Iframes are bad</h2>
+                    <ul>
+                        <li class="fragment">Don&apos;t inherit parent CSS rules
+                            <pre><code>iframe body { font-family: "Comic Sans"; } /* LOL */</code></pre>
+                        <li class="fragment">Hyperlinks navigate iframe, not parent
+                        <li class="fragment">Don&apos;t expand to fit contents
+                </section>
+
+                <section>
+                    <h2>Iframes are bad</h2>
+                    <iframe src="armageddon.html"></iframe>
+                </section>
+
+                <section class="fullscreen">
+                    <img src="assets/HTML5_Badge_512.png"/>
+                </section>
+
+                <section>
+                    <h2>seamless attribute</h2>
+                    
+                    <pre><code class="html" style="font-size:26px">&lt;iframe seamless src="http://parent.com"&gt;&lt;/iframe&gt;</code></pre>
+                </section>
+
+                <section>
+                    <h2>seamless attribute</h2>
+                    <iframe seamless src="seamless-slide.html"></iframe>
+                </section>
+
+                <section>
+                    <h2>Fantastic.</h2>
+                    <img src="assets/orson.gif">
+                </section>
+
+                <section>
+                    <h2>The cold, hard truth</h2>
+
+                    <ul>
+                        <li class="fragment"><span class="">seamless</span> is not implemented in any <em>stable</em> browser
+                        <li class="fragment">Chrome 21.x and up (beta or canary)
+                        <li class="fragment">http:// only – <em>not</em> file://
+                        <li class="fragment">Other browsers have superficial implementation:
+                            <pre style="font-size:26px"><code class="html">iframe[seamless]{
+    background-color: transparent;
+    border: 0px none transparent;
+    padding: 0px;
+    overflow: hidden;
+}</code></pre>
+                </section>
+
+                <section>
+                    <h2>Other browsers?</h2>
+
+                    <ul>
+                        <li class="fragment">You&apos;re boned.
+                        <li class="fragment">Nah, just kidding. We can emulate seamless<br/> using JavaScript and esoteric HTML.
+                </section>
+
+                <section>
+                    <h2>The plan</h2>
+                    <ul>
+                        <li>Two scripts:
+                            <ul>
+                                <li>JavaScript on the parent page
+                                <li>JavaScript inside the iframed document
+                            </ul>
+                        <li class="fragment">Communication: <code>window.postMessage</code>
+                </section>
+
+                <section>
+                    <h2>postMessage primer</h2>
+                   <pre class="long"><code class="javascript">// Parent
+var iframe = document.getElementById('the-iframe');
+
+iframe.contentWindow.postMessage('sup', '*');
+</code></pre>
+                    <pre class="long"><code>// Iframe
+window.parent.addEventListener('message', function (e) {
+    var data = e.data;
+
+    alert(data); // sup
+}, false);</code></pre>
+                </section>
+
+                <section>
+                    <h1>Relative<br/> links</h1>
+                </section>
+
+                <section>
+                    <h2>Recall &hellip;.</h2>
+
+                    <iframe src="armageddon.html"></iframe>
+                </section>
+
+                <section>
+                    <h2>Relative links</h2>
+
+                    <ul>
+                        <li>Easy &mdash; use the target attribute
+                            <pre><code>&lt;a href=&quot;http://example.com&quot; target=&quot;_parent&quot;&gt;!&lt;a&gt;</code></pre>
+                        <li class="fragment">Must be repeated for every link
+                        <li class="fragment">Gets tired fast, error prone
+
+                </section>
+
+                <section>
+                    <h2>&lt;base&gt;</h2>
+                    <ul>
+                        <li>Specifies base URL for all relative URLs
+                        <li>HTML 4.01
+                        <li>Goes in &lt;head&gt;
+                        <li>Supports target attribute (_blank, _parent, etc.)
+                </section>
+
+                <section>
+                    <h2>&lt;base&gt;</h2>
+                    <pre><code class="html">&lt;!DOCTYPE html&gt; &lt;!-- the iframe --&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;base href="http://parent.com/" target="_parent"&gt;
+  &lt;/head&gt;
+  
+  &lt;body&gt;
+    &lt;a href="#boom"/&gt;
+    &lt;!-- becomes: http://parent.com/#boom --&gt;
+
+    &lt;a href="http://disqus.com"/&gt;
+    &lt;!-- unchanged, still opens in parent --&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </section>
+
+                <section>
+                    <h2>Referring URL</h2>
+                    <ul>
+                        <li>How do you obtain it?
+                        <li class="fragment"><code>document.referrer</code> – not 100%
+                        <li class="fragment">Better: <code>window.location</code> + <code>postMessage</code>
+                </section>
+
+                <section>
+                    <h2>Referring URL</h2>
+                    <pre class="long"><code class="javascript">// Parent
+var iframe = document.getElementById('the-iframe');
+
+iframe.contentWindow.postMessage(
+    ['referrer', window.location.href], '*'
+);</code></pre>
+
+                <pre class="long"><code class="javascript">// Iframe
+window.parent.addEventListener('message', function (e) {
+    var eventName = e.data[0],
+    var data      = e.data[1];
+
+    switch (eventName) {
+        case 'referrer': injectBaseElement(data); break;
+        ...
+    }
+
+}, false);</code></pre>
+
+                </section>
+
+                <section>
+                    <h1>Inheriting<br/> styles</h1>
+                </section>
+
+                <section>
+                    <h2>Inheriting styles</h2>
+                    <ul>
+                        <li>Many strategies &hellip;
+                        <li class="fragment">Walk CSS tree and figure it out (read: no)
+                        <li class="fragment">Inject predefined CSS into iframe
+                        <li class="fragment"><em>Poor man&apos;s choice:</em> selective style detection using iframe parent element ✓
+                </section>
+
+                <section>
+                    <h2>Detecting styles</h2>
+                    <ul>
+                        <li>Inject test elements as siblings of iframe element
+
+                        <pre><code>&lt;div&gt;
+  &lt;a class="test"&gt;&lt;/a&gt;
+  &lt;span class="test"&gt;&lt;/span&gt;
+
+  &lt;iframe src="yerpage.html"&gt;&lt;/iframe&gt;
+&lt;/div&gt;</code></pre>
+                        <li>Determine their style properties (font, colo<strong>u</strong>r, etc.)
+                        <li>Pass into the iframe
+                </section>
+
+
+                <section>
+                    <h2>Detecting styles</h2>
+                    <pre class="long"><code>// Parent
+function getIframeStyles(iframe) {
+    
+    var $span = $('&lt;span/&gt;')
+        .appendTo(iframe.parentNode);
+
+    var styles = {
+        color:      $span.css('color'),
+        fontFamily: $span.css('font-family'),
+        fontSize:   $span.css('font-size')
+
+        ...
+    };
+
+    $span.remove(); // Cleanup
+
+    return styles;
+}
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Style injection</h2>
+                    
+                    <pre class="long"><code>// Parent
+var iframe = document.getElementById('the-iframe');
+
+iframe.contentWindow.postMessage(
+    ['styles', styles], '*'
+);
+</code></pre>
+                    <pre class="long"><code>// Iframe
+window.parent.addEventListener('message', function (e) {
+    var eventName = e.data[0];
+    var data      = e.data[1];
+
+    switch (eventName) {
+        case 'styles':   injectStyles(data);         break;
+        case 'referrer': injectBaseElement(data); break;
+        ...
+    }
+}, false);</code></pre>
+                </section>
+
+                <section>
+                    <h2>Style injection</h2>
+                    <pre><code>// Iframe
+function injectStyles(styles) {
+    $(document.body).css(styles);
+}</code></pre>
+                </section>
+
+                <section>
+                    <h1>Dynamic <br/>content</h1>
+                </section>
+
+                <section>
+                    <h2>Dynamic resizing</h2>
+                    <ul>
+                        <li>Inside iframe, determine content height
+                        <li>Use postMessage to send value to the parent
+                        <li>Parent sets height on iframe element
+                        <li class="fragment">If the DOM changes – start over
+                </section>
+
+                <section>
+                    <h2>Fit to content</h2>
+
+                    <pre class="long"><code class="javascript">// Iframe
+function resize() {
+    var height = $(html).height();
+
+    // Backwards – send message to parent
+    window.parent.postMessage(['setHeight', height], '*');
+}</code></pre>
+<pre class="long"><code class="javascript">// Parent
+window.addEventListener('message', function (e) {
+    var $iframe = $('#the-iframe');
+
+    var eventName = e.data[0];
+    var data      = e.data[1];
+
+    switch (eventName) {
+        case 'setHeight':
+            $iframe.height(data);
+            break;
+        ...
+    }
+}, false);
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Detecting DOM changes</h2>
+                    <ul>
+                        <li>Mutation events – <em>deprecated</em> (and slow anyways)
+                        <li class="fragment"><a href="https://developer.mozilla.org/en/DOM/DOM_Mutation_Observers">Mutation Observers</a> – DOM Level 4 (no time soon) <!-- Firefox 14 -->
+                        <li class="fragment">setTimeout - check size on interval (slow)
+                        <li class="fragment">If you want something done right &hellip;
+                </section>
+                <section>
+                    <h2>DIY DOM change signals</h2>
+                    <ul>
+                        <li>Whenever you modify the DOM, resize the frame
+                        <li class="fragment">Problem: querying content dimensions forces browser reflow
+                        <li class="fragment">Translation: <em>every</em> DOM modification will cause a reflow
+                </section>
+
+                <section>
+                    <h2>Debounce</h2>
+
+                    <pre class="long"><code class="javascript">updateDom(function () {
+    $('#foo').append('&lt;div&gt;bar&lt;/div&gt;');
+});
+
+updateDom(function () {
+    $('#baz').addClass('bigger');
+});</code></pre>
+
+<pre class="long"><code class="javascript">function updateDom(callback) {
+    callback();
+    resize();
+}
+
+// Fires resize function 50ms after *last* call
+
+var resize = _.debounce(function () {
+    _resize();
+}, 50);
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Debounce</h2>
+
+                    <ul>
+                        <li><em>One</em> reflow per set of uninterrupted DOM changes
+                        <li>Debounce duration (50 ms) isn&apos;t noticeable
+                        <li>Error prone – you can forget to use it
+                        <li class="fragment">&quot;It tastes awful, but it works&quot;
+                </section>
+
+                <section>
+                    <h2>The result</h2>
+                    <ul>
+                        <li>(Switch to hastily written demo)
+                </section>
+
+                <section>
+                    <h1>Thanks.</h1>
+                
+
+                    <ul>
+                        <li>@bentlegen
+                        <li>Demos &amp; slides: <a href="http://github.com/benvinegar">github.com/benvinegar</a>
+                        <li>Book: <a href="http://manning.com/vinegar">Third-party JavaScript (Manning)</a>
+                        <li>More: <a href="http://weblog.bocoup.com/third-party-javascript-development-future/">Third-party JS Development: The Future!</a><br/><span style="float:right;font-size:0.8em;">– Mike Pennisi (Bocoup)</span>
+                </section>
+            </div>
+
+            <!-- The navigational controls UI -->
+            <aside class="controls">
+                <a class="left" href="#">&#x25C4;</a>
+                <a class="right" href="#">&#x25BA;</a>
+                <a class="up" href="#">&#x25B2;</a>
+                <a class="down" href="#">&#x25BC;</a>
+            </aside>
+
+            <!-- Displays presentation progress, max value changes via JS to reflect # of slides -->
+            <div class="progress"><span></span></div>
+            
+        </div>
+
+        <!-- Optional libraries for code syntax highlighting and classList support in IE9 -->
+        <script src="lib/highlight.js"></script>
+        <script src="lib/classList.js"></script>
+        
+        <script src="js/reveal.js"></script>
+        
+        <script>
+        ;(function() {
+            var pre = Array.prototype.slice.call(document.getElementsByTagName('code'));
+            console.log(pre);
+            pre.forEach(function (p) {
+                p.setAttribute('contenteditable', 'true');
+            });
+        })();
+        </script>
+        <script>
+            // Parse the query string into a key/value object
+            var query = {};
+            location.search.replace( /[A-Z0-9]+?=(\w*)/gi, function(a) {
+                query[ a.split( '=' ).shift() ] = a.split( '=' ).pop();
+            } );
+
+            // Fires when a slide with data-state=customevent is activated
+            Reveal.addEventListener( 'customevent', function() {
+                alert( '"customevent" has fired' );
+            } );
+
+            // Fires each time a new slide is activated
+            Reveal.addEventListener( 'slidechanged', function( event ) {
+                // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+            } );
+
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+
+                // If true; each slide will be pushed to the browser history
+                history: true,
+
+                // Loops the presentation, defaults to false
+                loop: false,
+
+                // Flags if mouse wheel navigation should be enabled
+                mouseWheel: true,
+
+                // Apply a 3D roll to links on hover
+                rollingLinks: true,
+
+                // UI style
+                theme: query.theme || 'default', // default/neon
+
+                // Transition style
+                transition: query.transition || 'default' // default/cube/page/concave/linear(2d)
+            });
+
+            hljs.initHighlightingOnLoad();
+        </script>
+
+    </body>
+</html>
