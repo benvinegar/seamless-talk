@@ -1,10 +1,10 @@
 # Seamless Iframes: Tomorrow, today!
 
-This is a talk I gave at Gotham JS on July 14th, 2012, in NYC.
+This is a talk I gave at [Gotham JS](http://gothamjs.com) on July 14th, 2012, in NYC.
 
-http://gothamjs.com
+View the slides online here: http://benvinegar.github.com/seamless-talk
 
-You'll need Chrome 21 or newer in order to view the seamless examples.
+NOTE: You'll need Chrome 22 or newer ([Chrome Canary](https://tools.google.com/dlpage/chromesxs/)) in order to view the seamless examples.
 
 ## License
 
