@@ -1,6 +1,5 @@
 <!doctype html>  
 <html lang="en">
-    
     <head>
         <meta charset="utf-8">
         
@@ -19,7 +18,6 @@
 
         <link rel="stylesheet" href="lib/tomorrow-night.css">
     </head>
-    
     <body>
         
         <div class="reveal">
@@ -32,7 +30,7 @@
                 <section>
                     <h1>Seamless iframes</h1>
                     <h3 class="inverted">The future, today!</h3>
-                    <p style="font-size:0.5em;">Best viewed in Chrome version 22 or better (i.e. <a href="https://tools.google.com/dlpage/chromesxs/">Chrome Canary</a>)</p>
+                    <p class="note">Best viewed in Chrome version 22 or better (i.e. <a href="https://tools.google.com/dlpage/chromesxs/">Chrome Canary</a>)</p>
                     <script>
                         // Delicously hacky. Look away.
                         if( navigator.userAgent.match( /(iPhone|iPad|iPod|Android)/i ) ) document.write( '<p style="color: rgba(0,0,0,0.3); text-shadow: none;">('+'Tap to navigate'+')</p>' );
@@ -120,6 +118,7 @@
                 <section>
                     <h2>seamless attribute</h2>
                     <iframe seamless src="seamless-slide.html"></iframe>
+                    <p class="note seamless-required">Your browser doesn&apos;t support seamless iframes.<br/> This slide requires Chrome 22 or better (<a href="https://tools.google.com/dlpage/chromesxs/">Chrome Canary</a>).</p>
                 </section>
 
                 <section>
@@ -467,12 +466,20 @@ var resize = _.debounce(function () {
         <script src="js/reveal.js"></script>
         
         <script>
+        // Make every <code> element contentEditable - this is so I can live
+        // edit code during a presentation
         ;(function() {
             var pre = Array.prototype.slice.call(document.getElementsByTagName('code'));
-            console.log(pre);
+
             pre.forEach(function (p) {
                 p.setAttribute('contenteditable', 'true');
             });
+        })();
+
+        ;(function () {
+            var iframe = document.createElement('iframe');
+            if (iframe.seamless === undefined)
+                document.body.className = 'no-seamless';
         })();
         </script>
         <script>

@@ -153,6 +153,24 @@ body.scrollable {
     text-shadow: 0px 0px 6px rgba(0,0,0,0.2);
 }
 
+.note {
+    font-size: 0.6em;
+}
+
+/* Seamless not supported */
+
+.no-seamless iframe[seamless] {
+    height: 250px;
+}
+
+.seamless-required {
+    display: none;
+}
+
+.no-seamless .seamless-required {
+    display: block;
+}
+
 /* Target seamless iframe */
 .iframe ul { 
     margin-left: 2em;
