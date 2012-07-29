@@ -1,4 +1,4 @@
-# Seamless Iframes: Tomorrow, today!
+# Seamless Iframes: The future, today!
 
 This is a talk I gave at [Gotham JS](http://gothamjs.com) on July 14th, 2012, in NYC.
 
